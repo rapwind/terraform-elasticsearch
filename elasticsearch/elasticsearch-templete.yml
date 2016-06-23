@@ -1,0 +1,82 @@
+################################### Cluster ###################################
+cluster.name: elasticsearch
+
+#################################### Paths ####################################
+#path.conf: /path/to/conf
+#path.data: /path/to/data1,/path/to/data2
+#path.work: /path/to/work
+#path.logs: /path/to/logs
+#path.plugins: /path/to/plugins
+
+############################## Network And HTTP ###############################
+network.host: 0.0.0.0
+
+transport.tcp.port: 9300
+http.port: 9200
+
+################################### Gateway ###################################
+
+#gateway.type: local
+#gateway.recover_after_nodes: 1
+#gateway.recover_after_time: 5m
+#gateway.expected_nodes: 2
+
+
+############################# Recovery Throttling #############################
+#cluster.routing.allocation.node_initial_primaries_recoveries: 4
+#cluster.routing.allocation.node_concurrent_recoveries: 2
+indices.recovery.max_size_per_sec: 500mb
+indices.recovery.concurrent_streams: 4
+
+################################## Discovery ##################################
+#discovery.zen.minimum_master_nodes: 1
+#discovery.zen.ping.timeout: 3s
+#discovery.zen.ping.multicast.enabled: false
+#discovery.zen.ping.unicast.hosts: ["host1", "host2:port", "host3[portX-portY]"]
+
+################################## Slow Log ##################################
+#index.search.slowlog.threshold.query.warn: 10s
+#index.search.slowlog.threshold.query.info: 5s
+#index.search.slowlog.threshold.query.debug: 2s
+#index.search.slowlog.threshold.query.trace: 500ms
+
+#index.search.slowlog.threshold.fetch.warn: 1s
+#index.search.slowlog.threshold.fetch.info: 800ms
+#index.search.slowlog.threshold.fetch.debug: 500ms
+#index.search.slowlog.threshold.fetch.trace: 200ms
+
+#index.indexing.slowlog.threshold.index.warn: 10s
+#index.indexing.slowlog.threshold.index.info: 5s
+#index.indexing.slowlog.threshold.index.debug: 2s
+#index.indexing.slowlog.threshold.index.trace: 500ms
+
+################################## GC Logging ##################################
+#monitor.jvm.gc.ParNew.warn: 1000ms
+#monitor.jvm.gc.ParNew.info: 700ms
+#monitor.jvm.gc.ParNew.debug: 400ms
+
+#monitor.jvm.gc.ConcurrentMarkSweep.warn: 10s
+#monitor.jvm.gc.ConcurrentMarkSweep.info: 5s
+#monitor.jvm.gc.ConcurrentMarkSweep.debug: 2s
+
+# Change Default Scoring to BM25
+index.similarity.default.type: BM25
+
+############################### Filter Settings ###############################
+index:
+  analysis:
+    filter:
+      pos_filter:
+        type: kuromoji_neologd_part_of_speech
+        stoptags: [接続詞, 助詞, 助詞-格助詞, 助詞-格助詞-一般, 助詞-格助詞-引用, 助詞-格助詞-連語, 助詞-接続助詞, 助詞-係助詞, 助詞-副助詞, 助詞-間投助詞, 助詞-並立助詞, 助詞-終助詞, 助詞-副助詞／並立助詞／終助詞, 助詞-連体化, 助詞-副詞化, 助詞-特殊, 助動詞, 記号, 記号-一般, 記号-読点, 記号-句点, 記号-空白, 記号-括弧開, 記号-括弧閉, その他-間投, フィラー, 非言語音]
+    analyzer:
+      default:
+        type: custom
+        tokenizer: kuromoji_neologd_tokenizer
+        filter: [kuromoji_neologd_baseform, pos_filter, lowercase]
+        char_filter: [html_strip]
+      katakana_analyzer:
+        type: custom
+        tokenizer: kuromoji_neologd_tokenizer
+        filter: [kuromoji_neologd_baseform, pos_filter, kuromoji_neologd_readingform, lowercase]
+        char_filter: [html_strip]

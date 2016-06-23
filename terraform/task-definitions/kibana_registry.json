@@ -1,0 +1,15 @@
+[
+    {
+      "name": "registry",
+      "image": "${registry_docker_repository}",
+      "cpu": 10,
+      "memory": 512,
+      "portMappings": [
+        {
+          "hostPort": 5601,
+          "containerPort": 5601
+        }
+      ],
+      "essential": true
+    }
+]

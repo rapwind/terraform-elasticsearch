@@ -1,0 +1,9 @@
+#################################### Index ####################################
+index.number_of_shards: 5
+index.number_of_replicas: 1
+threadpool.index.queue_size: -1
+threadpool.bulk.queue_size: -1
+#################################### Node #####################################
+# SearchLoadBarancer
+node.master: false
+node.data: false

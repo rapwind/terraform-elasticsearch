@@ -1,0 +1,33 @@
+machine:
+  environment:
+    PATH: $HOME/.terraform:$PATH
+    TERRAFORM_VERSION: 0.5.1
+dependencies:
+  cache_directories:
+    - ~/.terraform
+  pre:
+    - |
+      mkdir -p $HOME/.terraform
+      if [ -z "$(ls -A $HOME/.terraform)" ]; then
+        cd $HOME/.terraform
+        curl -LO https://dl.bintray.com/mitchellh/terraform/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+        unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+        rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+      fi
+test:
+  pre:
+    - |
+      terraform --version
+  override:
+    - |
+      terraform plan
+  post:
+    - |
+      terraform remote push
+deployment:
+  production:
+    branch: master
+    commands:
+      - |
+        cd terraform
+        terraform apply

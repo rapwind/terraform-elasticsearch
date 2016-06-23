@@ -1,0 +1,8 @@
+##################################### AWS #####################################
+cluster.routing.allocation.awareness.attributes: aws_availability_zone
+cluster.routing.allocation.awareness.force.aws_availability_zone.values: us-east-1b,us-east-1c
+cloud.node.auto_attributes: true
+network.publish_host: _ec2_
+cloud.aws.region: us-east-1
+discovery.type: ec2
+discovery.ec2.tag.es_cluster: coordinator
