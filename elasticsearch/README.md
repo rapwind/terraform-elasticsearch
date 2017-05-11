@@ -20,7 +20,7 @@ $ VBoxManage controlvm "dev" natpf1 "elasticsearch-cluster,tcp,127.0.0.1,9300,,9
 
 ## Clone Dockerfile
 ```
-$ git clone git@github.com:techcampman/google-e-ops.git
+$ git clone git@github.com:rapwind/terraform-elasticsearch.git
 $ cd google-e-ops/elasticsearch
 ```
 
